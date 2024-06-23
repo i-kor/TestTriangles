@@ -1,0 +1,12 @@
+Build with CMake
+From repository root folder run these commands:
+    > mkdir build
+    > cd build
+    > cmake ..\src
+    > cmake --build .
+Usage
+Run executable providing a name of input file as a first argument
+If no argument is provided the program will try to read a file "..\input.txt"
+Example:
+    > main ..\input.txt
+    > main

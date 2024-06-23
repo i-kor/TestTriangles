@@ -1,0 +1,105 @@
+# Equal test
+0 0  1 0  0 1 
+0 0  0 1  1 0
+true
+
+# Simple test
+0 0  1 0  0 1 
+1 1  1 2  2 1
+false
+
+# Vertex touch
+0 0  2 0  0 2
+1 1  2 1  1 2
+true
+
+# Edge touch
+0 0  1 0  0 1 
+1 1  1 0  0 1 
+true
+
+# Deg Point on edge
+1 1  1 1  1 1
+0 0  2 0  0 2 
+true
+
+# Deg Point vertex
+2 0  2 0  2 0
+0 0  2 0  0 2 
+true
+
+# Deg Point inside
+0 0  0 0  0 0
+0 0  3 0  0 3 
+true
+
+# Deg Point outside
+3 3  3 3  3 3
+0 0  3 0  0 3 
+false
+
+# Deg Segment touch edge
+1 0  2 0  1 0
+0 0  3 0  0 3 
+true
+
+# Deg Segment touch vertex
+0 0  3 0  1 0
+0 1  2 0  3 1 
+true
+
+# Deg Segment outside
+0 0  3 0  1 0
+0 1  2 2  3 1
+false
+
+# Deg Segment intersects
+0 0  3 3  3 3
+1 0  2 1  1 2 
+true
+
+# Deg segments overlap
+0 0  2 0  2 0
+1 0  1 0  3 0
+true
+
+# Deg segments intersect
+0 0  1 1  2 2
+0 2  1 1  2 0
+true
+
+# Degenerate triangle non-intersect #1
+0 0  0 0  0 0
+1 1  1 1  1 1
+true
+
+# Degenerate triangle non-intersect #2
+0 0  0 0  0 0
+2 2  1 1  1 1
+false
+
+# Degenerate triangle non-intersect #2
+3 3  4 4  4 4
+2 2  1 1  1 1
+false
+
+# Degenerate triangle overlap #1
+0 0  4 4  4 4
+1 1  2 2  2 2
+true
+
+# Degenerate triangle overlap #2
+1 1  4 4  4 4
+0 0  2 2  2 2
+true
+
+# Degenerate triangle overlap #3 vertical
+0 0  0 4  0 4
+0 1  0 2  0 2
+true
+
+# Degenerate triangle touch #4 vertical
+1 1  4 4  4 4
+0 0  1 1  1 1
+true
+cd
