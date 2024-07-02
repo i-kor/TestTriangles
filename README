@@ -5,8 +5,12 @@ From repository root folder run these commands:
     > cmake ..\src
     > cmake --build .
 Usage
-Run executable providing a name of input file as a first argument
-If no argument is provided the program will try to read a file "..\input.txt"
+Run executable providing a name of input file as a first argument, and a mode as a second
+Mode could be 2D or 3D
+If no argument is provided the program will try to read a file "..\input3D.txt" in a 3D mode
 Example:
-    > main ..\input.txt
+    > main ..\input2D.txt 2D
     > main
+
+This program should work correctly in 2D mode
+In 3D mode it was not properly tested and it doesn't take in to account some cases such as overlapping triangles etc.

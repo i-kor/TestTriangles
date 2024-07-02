@@ -6,8 +6,8 @@
 #include <sstream>
 #include <vector>
 
-#include "triangle.h"
 #include "state.h"
+#include "triangle.h"
 
 // Custom boolean read from stream
 bool ReadBool(std::istream& input)
@@ -25,20 +25,19 @@ bool ReadBool(std::istream& input)
 
 // Made it using templates to provide the possibility of extension to use also Vector3
 // Single task
-template<typename Vector>
+template<typename Vector, typename Segment>
 struct Task
 {
-    //Triangle<Vector> triangle[2]; // Template for 2D/3D triangles. Triangle class should be a template parametrized by vector class
-    Triangle triangle[2];
+    Triangle<Vector, Segment> triangle[2];
     std::string name; // Name of the task is set from the commented line
     bool expectedResult;
 };
 
 // Read tasks from a file
-template<typename Vector>
-std::vector<Task<Vector>> ReadTasksFromFile(std::string filename)
+template<typename Vector, typename Segment>
+std::vector<Task<Vector, Segment>> ReadTasksFromFile(std::string filename)
 {
-    std::vector<Task<Vector>> tasks;
+    std::vector<Task<Vector, Segment>> tasks;
     std::ifstream file(filename);
     if(!file.is_open())
     {
@@ -50,7 +49,7 @@ std::vector<Task<Vector>> ReadTasksFromFile(std::string filename)
     
     std::string line;
     size_t lineCount{};
-    Task<Vector> task;
+    Task<Vector, Segment> task;
 
     while(std::getline(file, line))
     {
@@ -98,8 +97,8 @@ std::vector<Task<Vector>> ReadTasksFromFile(std::string filename)
 }
 
 // Output tasks to console for debugging
-template<typename Vector>
-void PrintTasks(std::vector<Task<Vector>>& tasks)
+template<typename Vector, typename Segment>
+void PrintTasks(std::vector<Task<Vector, Segment>>& tasks)
 {
     size_t taskCount{};
     for(const auto& task : tasks)
@@ -118,8 +117,8 @@ void PrintTasks(std::vector<Task<Vector>>& tasks)
     }
 }
 
-template<typename Vector>
-void RunTasks(std::vector<Task<Vector>>& tasks)
+template<typename Vector, typename Segment>
+void RunTasks(std::vector<Task<Vector, Segment>>& tasks)
 {
     size_t taskCount{};
     size_t failedCount{};

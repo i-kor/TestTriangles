@@ -2,16 +2,15 @@
 
 #include <iostream>
 
-struct Triangle;
-
 struct Vector2;
 
-// Segment reference
-struct Segment
+struct Segment2D
 {
     const Vector2& a;
     const Vector2& b;
 };
+
+struct Vector2;
 
 // 2D Vector
 struct Vector2
@@ -22,8 +21,8 @@ struct Vector2
     Vector2(): x{ .0 }, y{ .0 } {}
     Vector2(double newX, double newY) : x{ newX }, y{ newY } {}
 
-    // Check if point is on a segment
-    inline bool IsOnSegment(const Segment& segment) const;
+
+    inline bool IsOnSegment(const Segment2D& segment) const;
 
     // Squared length
     inline double SquaredLength();
@@ -41,7 +40,7 @@ inline bool operator!=(const Vector2& lhs, const Vector2& rhs)
     return !(lhs == rhs);
 }
 
-inline bool Vector2::IsOnSegment(const Segment& segment) const
+inline bool Vector2::IsOnSegment(const Segment2D& segment) const
 {
     // Check if out of rectangle
     if((x - segment.a.x) * (x - segment.b.x) > .0)
@@ -71,7 +70,7 @@ inline double Vector2::SquaredLength()
 }
 
 // Check if two segments AB and CD are intersecting
-inline bool AreIntersecting(const Segment& first, const Segment& second)
+inline bool AreIntersecting(const Segment2D& first, const Segment2D& second)
 {
     double denominator{ (second.b - second.a) * (first.b - first.a) };
     double alpha{ ((second.b - second.a) * (second.a - first.a)) };

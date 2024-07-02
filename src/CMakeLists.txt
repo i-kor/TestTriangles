@@ -7,6 +7,8 @@ add_executable(
     main.cpp
     vector2.cpp
     vector2.h
+    vector3.cpp
+    vector3.h
     triangle.cpp
     triangle.h
     state.h

@@ -1,16 +1,17 @@
 #pragma once
 
-#include "vector2.h"
-
 #include <iostream>
+#include "vector2.h"
+#include "vector3.h"
 
 // Triangle
+template<typename Vector, typename Segment>
 struct Triangle
 {
-    Vector2 vertex[3];
+    Vector vertex[3];
 
     Triangle() {};
-    Triangle(Vector2 (&vertices)[3])
+    Triangle(Vector (&vertices)[3])
     {
         vertex[0] = vertices[0];
         vertex[1] = vertices[1];
@@ -29,30 +30,33 @@ struct Triangle
     inline Segment GetBiggestEdge() const;
 
     // Check if point is on the inside of the edge starting from a vertex
-    inline bool PointOutsideEdge(int vertexIndex, const Vector2& point) const;
+    inline bool PointOutsideEdge(int vertexIndex, const Vector& point) const;
 
     // Check if point is inside of the triangle
-    inline bool PointInside(const Vector2& point) const;
+    inline bool PointInside(const Vector& point) const;
     
     // Check if triangle intersects with a segment
     inline bool IntersectsWithSegment(const Segment& segment) const;
 };
 
-inline bool Triangle::IsDegenerate() const
+template<typename Vector, typename Segment>
+inline bool Triangle<Vector, Segment>::IsDegenerate() const
 {
     if((vertex[2] - vertex[1]) * (vertex[0] - vertex[1]))
         return false;
     return true;
 }
 
-inline bool Triangle::IsClockwize() const
+template<typename Vector, typename Segment>
+inline bool Triangle<Vector, Segment>::IsClockwize() const
 {
     if((vertex[2] - vertex[1]) * (vertex[0] - vertex[1]) < .0 )
         return true;
     return false;
 }
 
-inline Segment Triangle::GetBiggestEdge() const
+template<typename Vector, typename Segment>
+inline Segment Triangle<Vector, Segment>::GetBiggestEdge() const
 {
     if(vertex[0].x == vertex[1].x && vertex[0].x == vertex[2].x)
         return { vertex[0], vertex[1] };
@@ -77,7 +81,8 @@ inline Segment Triangle::GetBiggestEdge() const
     }
 }
 
-inline bool Triangle::PointOutsideEdge(int vertexIndex, const Vector2& point) const
+template<typename Vector, typename Segment>
+inline bool Triangle<Vector, Segment>::PointOutsideEdge(int vertexIndex, const Vector& point) const
 {
     int nextVertexIndex{ (vertexIndex + 1) % 3 };
     if((vertex[nextVertexIndex] - vertex[vertexIndex]) * (point - vertex[vertexIndex]) < .0)
@@ -85,7 +90,8 @@ inline bool Triangle::PointOutsideEdge(int vertexIndex, const Vector2& point) co
     return false;
 }
 
-inline bool Triangle::PointInside(const Vector2& point) const
+template<typename Vector, typename Segment>
+inline bool Triangle<Vector, Segment>::PointInside(const Vector& point) const
 {
     for(int i{}; i < 3; ++i)
         if(PointOutsideEdge(i, point))
@@ -93,7 +99,8 @@ inline bool Triangle::PointInside(const Vector2& point) const
     return true;
 }
 
-inline bool Triangle::IntersectsWithSegment(const Segment& segment) const
+template<typename Vector, typename Segment>
+inline bool Triangle<Vector, Segment>::IntersectsWithSegment(const Segment& segment) const
 {
     for(int vertexIndex{}; vertexIndex < 3; ++vertexIndex)
     {
@@ -105,7 +112,19 @@ inline bool Triangle::IntersectsWithSegment(const Segment& segment) const
 }
 
 // Check if triangles are intersecting
-bool AreIntersecting(const Triangle& first, const Triangle& second);
+bool AreIntersecting(const Triangle<Vector2, Segment2D>& first, const Triangle<Vector2, Segment2D>& second);
+bool AreIntersecting(const Triangle<Vector3, Segment3D>& first, const Triangle<Vector3, Segment3D>& second);
 
-std::istream& operator>>(std::istream& input, Triangle& triangle);
-std::ostream& operator<<(std::ostream& output, const Triangle& triangle);
+template<typename Vector, typename Segment>
+std::istream& operator>>(std::istream& input, Triangle<Vector, Segment>& triangle)
+{
+    input >> triangle.vertex[0] >> triangle.vertex[1] >> triangle.vertex[2];
+    return input;
+}
+
+template<typename Vector, typename Segment>
+std::ostream& operator<<(std::ostream& output, const Triangle<Vector, Segment>& triangle)
+{
+    output << '{' << triangle.vertex[0] << "; " << triangle.vertex[1] << "; " << triangle.vertex[2]  << '}';
+    return output;
+}
